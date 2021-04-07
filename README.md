@@ -2,8 +2,6 @@
 
 This repository contains some of the 3D [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) sessions that were shown at the virtual Esri Developer Summit 2021. The presentations are created with [reveal-md](https://github.com/webpro/reveal-md), featuring interactive samples for which the source code can be found in this repository.
 
-The full 2021 Developer Summit [technical session playlist](https://www.youtube.com/playlist?list=PLaPDDLTCmy4Ys8vfmC7DbX3FHSsyosvh7) is available on YouTube.
-
 ## Presentations
 
 ### [ArcGIS API for JavaScript: 3D visualization](./)
@@ -13,14 +11,14 @@ Sascha Brunner, Esri R&D Center Zürich
 
 ---
 
-### [ArcGIS API for JavaScript: Client-side 3D analysis](./)
+### [ArcGIS API for JavaScript: Client-side 3D analysis](./client-side-3d-analysis.md)
 
 Mirjam Tschanen, Esri R&D Center Zürich \
 Hugo Campos, Esri R&D Center Zürich
 
 ---
 
-### [ArcGIS API for JavaScript: Web Editing in 3D](./)
+### [ArcGIS API for JavaScript: Web Editing in 3D](./web-editing-in-3d.md/)
 
 Roman Cattaneo, Esri R&D Center Zürich \
 Arno Fiva, Esri R&D Center Zürich
