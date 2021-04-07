@@ -13,14 +13,14 @@ Sascha Brunner, Esri R&D Center Zürich
 
 ---
 
-### [ArcGIS API for JavaScript: Client-side 3D analysis](./)
+### [ArcGIS API for JavaScript: Client-side 3D analysis](https://esridevsummit.github.io/2021-3D-jsapi/client-side-3d-analysis.html)
 
 Mirjam Tschanen, Esri R&D Center Zürich \
 Hugo Campos, Esri R&D Center Zürich
 
 ---
 
-### [ArcGIS API for JavaScript: Web Editing in 3D](./)
+### [ArcGIS API for JavaScript: Web Editing in 3D](https://esridevsummit.github.io/2021-3D-jsapi/web-editing-in-3d.html)
 
 Roman Cattaneo, Esri R&D Center Zürich \
 Arno Fiva, Esri R&D Center Zürich
