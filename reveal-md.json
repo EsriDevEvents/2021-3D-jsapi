@@ -1,0 +1,9 @@
+{
+  "title": "Esri Developer Summit 2021: ArcGIS API for JavaScript Presentations",
+  "assetsDir": "assets",
+  "theme": "black",
+  "highlightTheme": "railscasts",
+  "css": "style.css",
+  "template": "template.html",
+  "staticDirs": "talks/images,talks/prism,talks/samples"
+}

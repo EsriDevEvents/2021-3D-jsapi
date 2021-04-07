@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      .footer {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        font-size: 2.0em;
+        z-index: 99;
+        background-color: white;
+      }
+      .wrap {
+          height: 1000px;
+          overflow: hidden;
+      }
+      iframe {
+          width: 100% !important;
+          height: 100% !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <iframe id="iFrame" src="https://developers.arcgis.com/javascript/latest/" width="max-content"></iframe>
+    </div>
+    <div class="footer">
+      <a id="link" href="https://developers.arcgis.com/javascript/latest/">https://developers.arcgis.com/javascript/latest/</a>
+    </div>
+
+    <script>
+      const url = parent.Reveal.getCurrentSlide().dataset.title;
+      
+      document.getElementById("iFrame").src = url;
+      document.getElementById("link").href = url;
+      document.getElementById("link").innerHTML = url;
+      
+      parent.Reveal.addEventListener( "link", function() {
+        const url = parent.Reveal.getCurrentSlide().dataset.title;
+      
+        document.getElementById("iFrame").src = url;
+        document.getElementById("link").href = url;
+        document.getElementById("link").innerHTML = url;
+      } );
+    </script>
+  </body>
+</html>

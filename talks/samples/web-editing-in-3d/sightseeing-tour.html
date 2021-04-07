@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="description" content="">
+<title>ArcGIS Play</title>
+
+
+<link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/css/main.css">
+
+
+<style>
+	html {
+    font-family: "Avenir Next";
+	}
+
+	html,
+body,
+#viewDiv {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#overviewDiv {
+  width: 40vh;
+  height: 40vh;
+}
+
+.hide {
+  display: none;
+}
+
+</style>
+
+
+<script src="https://js.arcgis.com/4.18"  ></script>
+
+
+</head>
+<body>
+	<div id="viewDiv"></div>
+
+<div id="overviewDiv" class="hide"></div>
+
+
+
+	<script>
+		require(["esri/identity/OAuthInfo", "esri/identity/IdentityManager", "esri/views/View",
+        "./../support/widgets.js",], function(OAuthInfo, IdentityManager, View, widgetsSupport) {
+	IdentityManager.registerOAuthInfos([
+				new OAuthInfo({
+					appId: "RKNJfdy3Vn6nlmKm",
+					popup: true,
+					popupCallbackUrl: "/arcgis-play/dist/oauth-callback.html"
+				})
+			]);
+
+			if ("views" in View) {
+				View.views.on("change", function updateViews() {
+					let i = 0;
+
+					while (true) {
+						const name = i === 0 ? "view" : "view" + i;
+						const newView = View.views.getItemAt(i);
+
+						if (newView) {
+							window[name] = newView;
+						} else if (window[name]) {
+							delete window[name];
+						} else {
+							break;
+						}
+
+						i++;
+					}
+				});
+			}
+
+			window.isCompare = false;
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+require(["require", "esri/symbols/PathSymbol3DLayer", "esri/symbols/LineSymbol3D", "esri/widgets/Editor", "esri/layers/FeatureLayer", "esri/symbols/edges/SolidEdges3D", "esri/symbols/FillSymbol3DLayer", "esri/symbols/MeshSymbol3D", "esri/renderers/SimpleRenderer", "esri/layers/SceneLayer", "esri/Map", "esri/views/SceneView"], function (require, PathSymbol3DLayer, LineSymbol3D, Editor, FeatureLayer, SolidEdges3D, FillSymbol3DLayer, MeshSymbol3D, SimpleRenderer, SceneLayer, Map, SceneView) {
+    "use strict";
+
+    var buildingProps = {
+        portalItem: {
+            id: "d3344ba99c3f4efaa909ccfbcc052ed5"
+        },
+        popupEnabled: false,
+        legendEnabled: false
+    };
+    var texturedBuildings = new SceneLayer(__assign({}, buildingProps));
+    var routes = new FeatureLayer({
+        url: "https://services2.arcgis.com/cFEFS0EWrhfDeVw9/arcgis/rest/services/DS2021_Editing_Layer/FeatureServer/1",
+        renderer: new SimpleRenderer({
+            symbol: new LineSymbol3D({
+                symbolLayers: [
+                    new PathSymbol3DLayer({
+                        profile: "quad",
+                        width: 10,
+                        height: 3,
+                        material: { color: "#ff7380" },
+                        cap: "square",
+                        profileRotation: "all"
+                    })
+                ]
+            })
+        }),
+        displayField: "name"
+    });
+    var whiteBuildings = new SceneLayer(__assign({ renderer: new SimpleRenderer({
+            symbol: new MeshSymbol3D({
+                symbolLayers: [
+                    new FillSymbol3DLayer({
+                        material: {
+                            color: "white",
+                            colorMixMode: "replace"
+                        },
+                        edges: new SolidEdges3D({
+                            color: [120, 120, 120, 0.8],
+                            size: 0.75
+                        })
+                    })
+                ]
+            })
+        }) }, buildingProps));
+    var view = new SceneView({
+        container: "viewDiv",
+        map: new Map({
+            basemap: "topo",
+            ground: "world-elevation",
+            layers: [whiteBuildings, routes]
+        }),
+        camera: {
+            position: {
+                longitude: -122.38773079,
+                latitude: 37.77781474,
+                z: 2309.90317
+            },
+            heading: 326.93,
+            tilt: 41.01
+        },
+        environment: {
+            lighting: {
+                directShadowsEnabled: true
+            }
+        },
+        qualityProfile: "high"
+    });
+    view.when(() => widgetsSupport.createFullscreen(view));
+    var editor = new Editor({ view: view });
+    editor.layerInfos = [
+        {
+            layer: routes,
+            allowAttachments: false
+        }
+    ];
+    view.ui.add(editor, "top-right");
+    var svm = editor.viewModel.sketchViewModel;
+    var noop = function () { };
+    var removePreview = noop;
+    var heading = function (pointA, pointB) {
+        var atan2 = Math.atan2(pointB.y - pointA.y, pointB.x - pointA.x);
+        return 90 - (atan2 * 180) / Math.PI;
+    };
+    svm.watch(["activeTool", "state"], function () {
+        var activeTool = svm.activeTool;
+        if (activeTool === "reshape") {
+            overview.container.classList.remove("hide");
+            var lastVertices_1 = [];
+            var listener_1 = svm.on("update", function (e) {
+                var toolInfo = e.toolEventInfo;
+                if (toolInfo && e.graphics.length) {
+                    var event = e.toolEventInfo.type;
+                    var newLine = e.graphics[0].geometry.clone();
+                    var newVertices = newLine.paths[0];
+                    if (event === "reshape") {
+                        var i = 0;
+                        for (; i < lastVertices_1.length && i < newVertices.length; i++) {
+                            if (lastVertices_1[i][0] !== newVertices[i][0] ||
+                                lastVertices_1[i][1] !== newVertices[i][1] ||
+                                lastVertices_1[i][2] !== newVertices[i][2]) {
+                                break;
+                            }
+                        }
+                        var camera = overview.camera.clone();
+                        camera.position = newLine.getPoint(0, i);
+                        camera.heading = heading(camera.position, newLine.extent.center);
+                        overview.camera = camera;
+                    }
+                    lastVertices_1 = newVertices;
+                }
+            });
+            removePreview = function () {
+                listener_1.remove();
+                overview.container.classList.add("hide");
+            };
+        }
+        else {
+            removePreview();
+            removePreview = noop;
+        }
+    });
+    /*
+     Popup flight preview
+    */
+    var overview = new SceneView({
+        container: "overviewDiv",
+        map: new Map({
+            basemap: "satellite",
+            ground: "world-elevation",
+            layers: [texturedBuildings]
+        }),
+        camera: {
+            position: {
+                longitude: -122.39874132,
+                latitude: 37.78765843,
+                z: 183.83865
+            },
+            heading: 46.41,
+            tilt: 76.41,
+            fov: 90
+        },
+        environment: {
+            lighting: {
+                directShadowsEnabled: true,
+            },
+            atmosphere: {
+                quality: "high"
+            }
+        },
+        qualityProfile: "high"
+    });
+    overview.ui.components = [];
+    view.ui.add(overview.container, "bottom-right");
+});
+
+		});
+	</script>
+</body>
+</html>

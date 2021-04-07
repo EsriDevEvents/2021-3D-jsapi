@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1">
+  <title>Firefly Basemap</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/next/esri/themes/dark/main.css">
+  <script src="https://js.arcgis.com/next/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      background: rgb(0,0,0);
+      font-family: "Avenir Next W00","Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/SceneView",
+      "esri/layers/Layer",
+      "./../../support/widgets.js",
+      "dojo/domReady!"
+    ], function (
+      Map,
+      SceneView,
+      Layer,
+      widgetsSupport,
+    ) {
+
+      // Check what slide we are showing
+      if (parent.Reveal.getCurrentSlide().dataset.title === "slide-where-we-add-firefly-basemap") {
+
+        const map = new Map({
+          basemap: "topo-vector",
+        });
+
+        const view = new SceneView({
+          map,
+          container: "viewDiv",
+        });
+
+        widgetsSupport.createFullscreen(view);
+        window.view = view;
+
+        var button = parent.document.getElementById("addFireflyBasemap");
+        button.onclick = function() {
+          Layer.fromPortalItem({
+            portalItem: {
+              id: "a66bfb7dd3b14228bf7ba42b138fe2ea"
+            }
+          }).then(function(layer) {
+            map.add(layer);
+          });
+        };
+
+      }
+
+    });
+
+  </script>
+</body>
+
+</html>
