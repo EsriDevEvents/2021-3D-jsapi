@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ElevationProfile Sample</title>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/next/esri/themes/light/main.css"
+    />
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        font-family: "Avenir Next";
+      }
+    </style>
+
+    <script
+      defer
+      src="https://unpkg.com/es-module-shims@0.9.0/dist/es-module-shims.js"
+    ></script>
+    <script type="importmap-shim">
+      {
+        "imports": {
+          "esri/": "https://js.arcgis.com/next/@arcgis/core/"
+        }
+      }
+    </script>
+
+    <script src="https://unpkg.com/json2csv@5.0.5/dist/json2csv.umd.js"></script>
+    <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="elevation-profile.js" type="module-shim"></script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
