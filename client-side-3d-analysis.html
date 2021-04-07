@@ -360,7 +360,7 @@ view.ui.add(button, "bottom-left");
       <pre><code class="lang-ts">
   layer.popupTemplate = {
     title: `{address}`,
-    content: `This structure was built in {yearCompleted}
+    content: `This structure was built in {yearCompleted} 
               and has a {usage} use.`
   };
       </code></pre>
@@ -370,7 +370,7 @@ view.ui.add(button, "bottom-left");
       <pre><code class="lang-ts">
   content: [{
     type: "text",
-    text: `This structure was built in {yearCompleted}
+    text: `This structure was built in {yearCompleted} 
             and has a {usage} use.`
   },{
     type: "fields",
@@ -592,7 +592,7 @@ https://developers.arcgis.com/javascript/latest/api-reference/esri-widgets-TimeS
   ...
   {
     outStatisticFieldName: "area_400_500",
-    onStatisticField:
+    onStatisticField: 
       `CASE WHEN (solarAreaSuitableM2 < 500 AND
       solarAreaSuitableM2 >= 400) THEN 1 ELSE 0 END`,
     statisticType: "sum"
